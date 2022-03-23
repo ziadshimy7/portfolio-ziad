@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { dirname } from "path";
+import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { fileURLToPath } from "url";
 import cors from "cors";
@@ -9,6 +10,7 @@ import experiencesRouter from "../routers/experiencesRouter.js";
 import sendEmailRouter from "../routers/sendEmailRouter.js";
 import testimonialsRouter from "../routers/testimonialsRouter.js";
 import worksRouter from "../routers/workRouter.js";
+dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const app = express();
@@ -26,13 +28,10 @@ app.get("/download", (req, res) => {
   res.download(file);
 });
 mongoose
-  .connect(
-    "mongodb+srv://portfolio:Cocowawa_12345@cluster0.atiml.mongodb.net/portfolio?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() =>
     app.listen(PORT, () => console.log(`SERVER RUNNING ON PORT : ${PORT}`))
   )
