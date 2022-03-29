@@ -1,10 +1,12 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-dotenv.config(); 
+dotenv.config();
 export const sendEmail = async (req, res) => {
   try {
     let transporter = nodemailer.createTransport({
       service: "hotmail",
+      port: 587,
+      secure: false,
       auth: {
         user: process.env.HOTMAIL_USERNAME,
         pass: process.env.HOTMAIL_PASSWORD,
@@ -18,16 +20,15 @@ export const sendEmail = async (req, res) => {
       }
     });
     let info = await transporter.sendMail({
-      from: `${req.body.name} 👻 <${req.body.userEmail}>`,
+      from: `${process.env.HOTMAIL_USERNAME}>`,
       to: "ziadshimy7@gmail.com",
-      subject: "Hello ✔",
-      text: "Hello world",
-      html: `<b>${req.body.message}</b>`,
+      subject: "Website feedback",
+      html: `<b>${req.body.message}
+      from ${req.body.userEmail}</b>`,
     });
+    console.log(info);
     if (info) res.status(200).json({ message: "success" });
   } catch (error) {
-    res
-      .status(404)
-      .json({ message: "Error sending email, Please try again later" });
+    res.status(404).json({ message: error.response });
   }
 };
