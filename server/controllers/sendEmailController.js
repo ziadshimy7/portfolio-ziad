@@ -4,7 +4,7 @@ dotenv.config();
 export const sendEmail = async (req, res) => {
   try {
     let transporter = nodemailer.createTransport({
-      service: "hotmail",
+      service: "Mail.ru",
       port: 587,
       secure: false,
       auth: {
