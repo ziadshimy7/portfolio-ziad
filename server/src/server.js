@@ -24,7 +24,7 @@ app.use("/sendemail", sendEmailRouter);
 app.use("/testimonials", testimonialsRouter);
 app.use("/work", worksRouter);
 app.get("/download", (req, res) => {
-  const file = `${__dirname}/downloads/Ziad.pdf`;
+  const file = `${__dirname}/downloads/ZiadCV.pdf`;
   res.download(file);
 });
 mongoose
